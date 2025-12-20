@@ -101,7 +101,7 @@ $q = mysqli_query($conn, $sql);
                                 <!-- Logic Status Badge -->
                                 <?php 
                                     $statusMasukColor = 'success';
-                                    if(stripos($row['status_masuk'], 'telat') !== false) $statusMasukColor = 'warning';
+                                    if(!empty($row['status_masuk']) && stripos($row['status_masuk'], 'telat') !== false) $statusMasukColor = 'warning';
                                     
                                     $statusPulangColor = 'success';
                                     if($row['status_pulang'] == '') $statusPulangColor = 'secondary';
