@@ -28,7 +28,7 @@ $bulanIndo = [
 $namaBulan = $bulanIndo[$bulan] ?? $bulan;
 
 // 2. Query Data - Join absensi dan users
-$query = "SELECT a.*, u.nama, u.role 
+$query = "SELECT a.*, u.nama, u.role, u.jabatan 
           FROM absensi a 
           JOIN users u ON a.user_id = u.id 
           WHERE DATE_FORMAT(a.tanggal, '%Y-%m') = '$tahun-$bulan' ";
@@ -78,10 +78,10 @@ $html = '<!DOCTYPE html>
             <tr>
                 <th width="5%">No</th>
                 <th width="15%">Tanggal</th>
-                <th width="25%">Nama Pegawai</th>
+                <th width="30%">Nama Pegawai</th>
                 <th width="15%">Jam Masuk</th>
                 <th width="15%">Jam Pulang</th>
-                <th width="25%">Status</th>
+                <th width="20%">Status</th>
             </tr>
         </thead>
         <tbody>';
@@ -92,6 +92,7 @@ if (count($data) > 0) {
         $tglIndo = date('d-m-Y', strtotime($d['tanggal']));
         $jamMasuk = $d['jam_masuk'] ? date('H:i', strtotime($d['jam_masuk'])) : '-';
         $jamPulang = $d['jam_pulang'] ? date('H:i', strtotime($d['jam_pulang'])) : '-';
+        $jabatan = !empty($d['jabatan']) ? '<br><small style="color:blue">' . htmlspecialchars($d['jabatan']) . '</small>' : '';
         
         $status = 'Hadir';
         // Simple logic for status text
@@ -100,7 +101,7 @@ if (count($data) > 0) {
         $html .= '<tr>
             <td class="text-center">' . $no++ . '</td>
             <td class="text-center">' . $tglIndo . '</td>
-            <td>' . htmlspecialchars($d['nama']) . '<br><small style="color:#666">' . htmlspecialchars($d['role']) . '</small></td>
+            <td>' . htmlspecialchars($d['nama']) . '<br><small style="color:#666">' . htmlspecialchars($d['role']) . '</small>' . $jabatan . '</td>
             <td class="text-center">' . $jamMasuk . '</td>
             <td class="text-center">' . $jamPulang . '</td>
             <td>' . $status . '</td>

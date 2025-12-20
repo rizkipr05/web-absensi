@@ -52,7 +52,7 @@ include 'layout/sidebar.php';
                     <tbody>
                         <?php
                         // Pagination logic could be added here later
-                        $query = "SELECT a.*, u.nama, u.role 
+                        $query = "SELECT a.*, u.nama, u.role, u.jabatan 
                                   FROM absensi a 
                                   JOIN users u ON a.user_id = u.id 
                                   ORDER BY a.tanggal DESC, a.jam_masuk DESC";
@@ -63,6 +63,7 @@ include 'layout/sidebar.php';
                                 $date = date('d M Y', strtotime($row['tanggal']));
                                 $jam_masuk = $row['jam_masuk'] ? date('H:i', strtotime($row['jam_masuk'])) : '-';
                                 $jam_pulang = $row['jam_pulang'] ? date('H:i', strtotime($row['jam_pulang'])) : '-';
+                                $jabatan = !empty($row['jabatan']) ? $row['jabatan'] : '';
                                 
                                 // Status logic
                                 $status_badge = '<span class="badge bg-secondary rounded-pill px-3">Belum Lengkap</span>';
@@ -77,6 +78,7 @@ include 'layout/sidebar.php';
                                     <td>
                                         <div class="fw-bold"><?= htmlspecialchars($row['nama']) ?></div>
                                         <small class="text-muted"><?= htmlspecialchars($row['role']) ?></small>
+                                        <?php if($jabatan): ?><br><small class="text-info"><?= htmlspecialchars($jabatan) ?></small><?php endif; ?>
                                     </td>
                                     <td><?= $jam_masuk ?></td>
                                     <td><?= $jam_pulang ?></td>

@@ -65,6 +65,22 @@
                     <h5 class="m-0 fw-bold text-success"><i class="bi bi-geo-alt me-2"></i>Lokasi Anda</h5>
                 </div>
                 <div class="card-body">
+                    <div class="mb-3">
+                        <label for="jabatanSelect" class="form-label fw-bold text-dark">Pilih Jabatan / Posisi</label>
+                        <select class="form-select" id="jabatanSelect" required>
+                            <option value="" selected disabled>-- Pilih Jabatan Anda --</option>
+                            <option value="Business Consultants (BC)">Business Consultants (BC)</option>
+                            <option value="Senior Business Consultants (SBC)">Senior Business Consultants (SBC)</option>
+                            <option value="Business Senior Manager (BSM)">Business Senior Manager (BSM)</option>
+                            <option value="Senior Business Manager (SBM)">Senior Business Manager (SBM)</option>
+                            <option value="Executive Manager (EM)">Executive Manager (EM)</option>
+                            <option value="Senior Executive Manager (SEM)">Senior Executive Manager (SEM)</option>
+                            <option value="Vice Branch Manager (VBM)">Vice Branch Manager (VBM)</option>
+                            <option value="Branch Manager (BM)">Branch Manager (BM)</option>
+                        </select>
+                        <div class="form-text small">Pastikan jabatan yang dipilih sesuai.</div>
+                    </div>
+
                     <div class="d-grid mb-4">
                         <button class="btn btn-success" id="btnLocation" type="button">
                             <i class="bi bi-geo-alt-fill me-2"></i>Ambil Lokasi Saat Ini
@@ -91,6 +107,7 @@
                         <input type="hidden" name="lat" id="lat">
                         <input type="hidden" name="lng" id="lng">
                         <input type="hidden" name="accuracy" id="accuracy">
+                        <input type="hidden" name="jabatan" id="jabatanInput">
 
                         <button class="btn btn-dark w-100 py-3 fw-bold" type="submit" id="btnSubmit" disabled>
                             <i class="bi bi-send-fill me-2"></i>Kirim Absen Masuk
@@ -131,8 +148,17 @@ let streamRef = null;
 let hasPhoto = false;
 let hasLocation = false;
 
+const jabatanSelect = document.getElementById('jabatanSelect');
+const jabatanInput = document.getElementById('jabatanInput');
+
 function updateSubmitState() {
-  btnSubmit.disabled = !(hasPhoto && hasLocation);
+  // Sync hidden input
+  jabatanInput.value = jabatanSelect.value;
+  
+  const isJabatanSelected = jabatanSelect.value !== "";
+  
+  btnSubmit.disabled = !(hasPhoto && hasLocation && isJabatanSelected);
+  
   if (!btnSubmit.disabled) {
       btnSubmit.classList.remove('btn-dark');
       btnSubmit.classList.add('btn-primary');
@@ -141,6 +167,8 @@ function updateSubmitState() {
       btnSubmit.classList.remove('btn-primary');
   }
 }
+
+jabatanSelect.addEventListener('change', updateSubmitState);
 
 // =====================
 // START CAMERA

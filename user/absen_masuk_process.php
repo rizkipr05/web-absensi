@@ -13,10 +13,18 @@ $photo_base64 = $_POST['photo_base64'] ?? '';
 $lat = $_POST['lat'] ?? '';
 $lng = $_POST['lng'] ?? '';
 $accuracy = $_POST['accuracy'] ?? '';
+$jabatan = mysqli_real_escape_string($conn, $_POST['jabatan'] ?? '');
 
 if ($photo_base64 === '' || $lat === '' || $lng === '') {
   die("Data selfie/lokasi tidak lengkap.");
 }
+
+if ($jabatan === '') {
+    die("Jabatan belum dipilih.");
+}
+
+// Update Jabatan User
+mysqli_query($conn, "UPDATE users SET jabatan='$jabatan' WHERE id=$user_id");
 
 // Cek sudah absen masuk hari ini?
 $cek = mysqli_query($conn, "SELECT id, jam_masuk FROM absensi WHERE user_id=$user_id AND tanggal='$tanggal' LIMIT 1");

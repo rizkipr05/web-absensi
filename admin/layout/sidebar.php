@@ -26,6 +26,11 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <i class="bi bi-printer"></i> Laporan Cetak
             </a>
         </li>
+        <li class="<?= $current_page == 'karyawan.php' ? 'active' : '' ?>">
+            <a href="karyawan.php">
+                <i class="bi bi-people"></i> Data Pegawai
+            </a>
+        </li>
     </ul>
 
     <div style="margin-top: auto; padding: 20px;">
