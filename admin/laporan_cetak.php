@@ -22,11 +22,11 @@
                     <h5 class="m-0 fw-bold text-primary"><i class="bi bi-file-earmark-pdf me-2"></i>Parameter Laporan</h5>
                 </div>
                 <div class="card-body p-4">
-                    <form>
+                    <form action="cetak_pdf.php" method="POST" target="_blank">
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label for="bulan" class="form-label fw-bold small text-muted text-uppercase">Bulan</label>
-                                <select class="form-select bg-light border-0 py-2" id="bulan">
+                                <select class="form-select bg-light border-0 py-2" id="bulan" name="bulan" required>
                                     <option value="" disabled selected>Pilih Bulan</option>
                                     <option value="01">Januari</option>
                                     <option value="02">Februari</option>
@@ -44,7 +44,14 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="tahun" class="form-label fw-bold small text-muted text-uppercase">Tahun</label>
-                                <input type="number" class="form-control bg-light border-0 py-2" id="tahun" value="<?= date('Y') ?>">
+                                <select class="form-select bg-light border-0 py-2" id="tahun" name="tahun" required>
+                                    <?php 
+                                    $currentYear = date('Y');
+                                    for($i = $currentYear; $i >= $currentYear - 2; $i--) {
+                                        echo "<option value='$i'>$i</option>";
+                                    }
+                                    ?>
+                                </select>
                             </div>
                             
                             <!-- Optional additional filters -->
@@ -52,14 +59,14 @@
                                 <label class="form-label fw-bold small text-muted text-uppercase">Tipe Laporan</label>
                                 <div class="d-flex gap-3">
                                     <div class="form-check card-radio p-0">
-                                        <input class="form-check-input d-none" type="radio" name="tipeLaporan" id="tipeSemua" checked>
+                                        <input class="form-check-input d-none" type="radio" name="tipeLaporan" id="tipeSemua" value="semua" checked>
                                         <label class="form-check-label border rounded p-3 d-block text-center cursor-pointer radio-label" for="tipeSemua">
                                             <i class="bi bi-people d-block fs-4 mb-2"></i>
                                             Semua Pegawai
                                         </label>
                                     </div>
                                     <div class="form-check card-radio p-0">
-                                        <input class="form-check-input d-none" type="radio" name="tipeLaporan" id="tipeIndividu">
+                                        <input class="form-check-input d-none" type="radio" name="tipeLaporan" id="tipeIndividu" value="individu">
                                         <label class="form-check-label border rounded p-3 d-block text-center cursor-pointer radio-label" for="tipeIndividu">
                                             <i class="bi bi-person d-block fs-4 mb-2"></i>
                                             Pegawai Tertentu
@@ -67,6 +74,9 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                            <!-- Select user dropdown (hidden by default, shown via JS if needed, but for now just kept simplified) -->
+                            <!-- Note: JS for toggling 'individu' selection is assumed to be added later or just standard -->
 
                         </div>
 
