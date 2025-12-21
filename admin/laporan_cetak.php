@@ -1,5 +1,11 @@
-<?php include 'layout/header.php'; ?>
-<?php include 'layout/sidebar.php'; ?>
+<?php 
+include 'layout/header.php'; 
+include 'layout/sidebar.php'; 
+require_once '../config/database.php';
+
+// Fetch users for the dropdown
+$users = mysqli_query($conn, "SELECT id, nama FROM users WHERE role='user' ORDER BY nama ASC");
+?>
 
 <div class="container-fluid p-0">
     <div class="row mb-4">
@@ -75,8 +81,16 @@
                                 </div>
                             </div>
                             
-                            <!-- Select user dropdown (hidden by default, shown via JS if needed, but for now just kept simplified) -->
-                            <!-- Note: JS for toggling 'individu' selection is assumed to be added later or just standard -->
+                            <!-- Select user dropdown (Hidden by default) -->
+                            <div class="col-12 mt-3" id="userDropdownContainer" style="display: none;">
+                                <label for="user_id" class="form-label fw-bold small text-muted text-uppercase">Pilih Pegawai</label>
+                                <select class="form-select bg-light border-0 py-2" id="user_id" name="user_id">
+                                    <option value="" selected>-- Pilih Pegawai --</option>
+                                    <?php while($user = mysqli_fetch_assoc($users)): ?>
+                                        <option value="<?= $user['id'] ?>"><?= htmlspecialchars($user['nama']) ?></option>
+                                    <?php endwhile; ?>
+                                </select>
+                            </div>
 
                         </div>
 
@@ -142,5 +156,28 @@
 }
 .cursor-pointer { cursor: pointer; }
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tipeSemua = document.getElementById('tipeSemua');
+    const tipeIndividu = document.getElementById('tipeIndividu');
+    const userDropdown = document.getElementById('userDropdownContainer');
+    const userSelect = document.getElementById('user_id');
+
+    function toggleDropdown() {
+        if (tipeIndividu.checked) {
+            userDropdown.style.display = 'block';
+            userSelect.required = true;
+        } else {
+            userDropdown.style.display = 'none';
+            userSelect.required = false;
+            userSelect.value = ''; // Reset selection
+        }
+    }
+
+    tipeSemua.addEventListener('change', toggleDropdown);
+    tipeIndividu.addEventListener('change', toggleDropdown);
+});
+</script>
 
 <?php include 'layout/footer.php'; ?>

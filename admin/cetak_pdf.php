@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 require_once '../config/database.php';
 require_once '../vendor/autoload.php';
 
@@ -125,13 +128,19 @@ $html .= '</tbody>
 
 // 4. Generate PDF
 try {
+    // mPDF v8 uses namespaced class
     $mpdf = new \Mpdf\Mpdf([
         'mode' => 'utf-8', 
         'format' => 'A4', 
-        'orientation' => 'P'
+        'orientation' => 'P',
+        'margin_left' => 15,
+        'margin_right' => 15,
+        'margin_top' => 16,
+        'margin_bottom' => 16,
+        'margin_header' => 9,
+        'margin_footer' => 9
     ]);
     
-    // Add header/footer if needed using mPDF built-in methods
     $mpdf->SetFooter('{PAGENO}');
     
     $mpdf->WriteHTML($html);
