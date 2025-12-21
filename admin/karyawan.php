@@ -21,7 +21,9 @@ require_once '../config/database.php';
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h5 class="card-title fw-bold text-primary m-0"><i class="bi bi-people me-2"></i>Daftar Pegawai</h5>
-                <!-- Add User Button could go here -->
+                <a href="karyawan_tambah.php" class="btn btn-primary text-white">
+                    <i class="bi bi-plus-lg me-2"></i>Tambah Pegawai
+                </a>
             </div>
 
             <div class="table-responsive">
@@ -54,8 +56,11 @@ require_once '../config/database.php';
                                 <td><span class="badge bg-info text-dark rounded-pill px-3"><?= htmlspecialchars($jabatan) ?></span></td>
                                 <td><?= $status ?></td>
                                 <td class="text-end">
-                                    <a href="karyawan_edit.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-outline-primary rounded-circle" data-bs-toggle="tooltip" title="Edit">
+                                    <a href="karyawan_edit.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-outline-primary rounded-circle me-1" data-bs-toggle="tooltip" title="Edit">
                                         <i class="bi bi-pencil-fill"></i>
+                                    </a>
+                                    <a href="karyawan_hapus.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-outline-danger rounded-circle" data-bs-toggle="tooltip" title="Hapus" onclick="return confirm('Yakin ingin menghapus pegawai ini? Data yang dihapus tidak dapat dikembalikan.')">
+                                        <i class="bi bi-trash-fill"></i>
                                     </a>
                                 </td>
                             </tr>

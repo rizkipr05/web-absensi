@@ -1,6 +1,6 @@
 <?php 
-include 'layout/header.php'; 
-include 'layout/sidebar.php'; 
+ob_start();
+session_start();
 require_once '../config/database.php';
 
 $id = $_GET['id'] ?? 0;
@@ -24,7 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     $update = "UPDATE users SET nama='$nama', jabatan='$jabatan', is_active=$is_active WHERE id=$id";
     if (mysqli_query($conn, $update)) {
-        echo "<script>alert('Data berhasil diperbarui'); window.location='karyawan.php';</script>";
+        $_SESSION['success'] = "Data berhasil diperbarui";
+        header("Location: karyawan.php");
         exit;
     } else {
         $error = mysqli_error($conn);
@@ -43,6 +44,8 @@ $jabatanOptions = [
     'BM' => 'Branch Manager (BM)'
 ];
 
+include 'layout/header.php'; 
+include 'layout/sidebar.php'; 
 ?>
 
 <div class="container-fluid p-0">
