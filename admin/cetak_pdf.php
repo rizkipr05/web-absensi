@@ -104,7 +104,7 @@ if (count($data) > 0) {
         $html .= '<tr>
             <td class="text-center">' . $no++ . '</td>
             <td class="text-center">' . $tglIndo . '</td>
-            <td>' . htmlspecialchars($d['nama']) . '<br><small style="color:#666">' . htmlspecialchars($d['role']) . '</small>' . $jabatan . '</td>
+            <td>' . htmlspecialchars($d['nama']) . $jabatan . '</td>
             <td class="text-center">' . $jamMasuk . '</td>
             <td class="text-center">' . $jamPulang . '</td>
             <td>' . $status . '</td>

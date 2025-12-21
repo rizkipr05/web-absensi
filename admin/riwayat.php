@@ -22,9 +22,6 @@ include 'layout/sidebar.php';
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h5 class="card-title fw-bold text-primary m-0"><i class="bi bi-table me-2"></i>Data Kehadiran</h5>
-                <button class="btn btn-primary btn-sm rounded-pill px-3">
-                    <i class="bi bi-download me-2"></i>Export Data
-                </button>
             </div>
             
             <div class="alert alert-light border-start border-4 border-info shadow-sm" role="alert">
@@ -77,8 +74,7 @@ include 'layout/sidebar.php';
                                     <td><?= $date ?></td>
                                     <td>
                                         <div class="fw-bold"><?= htmlspecialchars($row['nama']) ?></div>
-                                        <small class="text-muted"><?= htmlspecialchars($row['role']) ?></small>
-                                        <?php if($jabatan): ?><br><small class="text-info"><?= htmlspecialchars($jabatan) ?></small><?php endif; ?>
+                                        <?php if($jabatan): ?><small class="text-info"><?= htmlspecialchars($jabatan) ?></small><?php endif; ?>
                                     </td>
                                     <td><?= $jam_masuk ?></td>
                                     <td><?= $jam_pulang ?></td>
