@@ -6,7 +6,6 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 require_once '../config/database.php';
 
-// Jabatan Options (same as edit page for consistency)
 $jabatanOptions = [
     'BC' => 'Business Consultants (BC)',
     'SBC' => 'Senior Business Consultants (SBC)',

@@ -146,6 +146,5 @@ $error = $_GET['error'] ?? null;
         </div>
     </div>
   </div>
-
 </body>
 </html>
